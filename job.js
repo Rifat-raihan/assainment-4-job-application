@@ -60,3 +60,64 @@ function togglestyle(id) {
         renderCards(id === 'interview-btn' ? interviewList : rejectList);
     }
 }
+
+mainContainer.addEventListener('click', function (event) {
+    const target = event.target;
+    const parentNode = target.closest('.card'); 
+
+    if (!parentNode) return;
+
+    const cardInfo = {
+        companyName: parentNode.querySelector('.company-name').innerText,
+        post: parentNode.querySelector('.post').innerText,
+        selary: parentNode.querySelector('.selary').innerText,
+        note: parentNode.querySelector('.note').innerText
+    };
+
+    if (target.closest('.btn-delate')) {
+        interviewList = interviewList.filter(item => item.companyName !== cardInfo.companyName);
+        rejectList = rejectList.filter(item => item.companyName !== cardInfo.companyName);
+        
+        parentNode.remove();
+        
+        if (currentStatus === 'all-btn') {
+            calculateCount();
+        } else {
+            renderCards(currentStatus === 'interview-btn' ? interviewList : rejectList);
+            calculateCount();
+        }
+        return;
+    }
+
+
+    if (target.classList.contains('interview-btn')) {
+        parentNode.querySelector('.not-applied-btn').innerText = 'INTERVIEW';
+        if (!interviewList.find(item => item.companyName === cardInfo.companyName)) {
+            interviewList.push({ ...cardInfo, notAppliedBtn: 'INTERVIEW' });
+        }
+        rejectList = rejectList.filter(item => item.companyName !== cardInfo.companyName);
+    } 
+
+  
+    else if (target.classList.contains('rejected-btn')) {
+        parentNode.querySelector('.not-applied-btn').innerText = 'REJECTED';
+        if (!rejectList.find(item => item.companyName === cardInfo.companyName)) {
+            rejectList.push({ ...cardInfo, notAppliedBtn: 'REJECTED' });
+        }
+        interviewList = interviewList.filter(item => item.companyName !== cardInfo.companyName);
+    }
+
+
+    if (currentStatus !== 'all-btn') {
+        renderCards(currentStatus === 'interview-btn' ? interviewList : rejectList);
+    }
+    calculateCount();
+});
+
+function renderCards(list) {
+    filterSection.innerHTML = '';
+    
+    if (list.length === 0) {
+        filterSection.innerHTML = getEmptyStateHTML();
+        return;
+    }
