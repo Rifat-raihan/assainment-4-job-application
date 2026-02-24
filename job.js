@@ -35,10 +35,8 @@ function calculateCount() {
         cardSection.innerHTML = getEmptyStateHTML();
     }
 }
-
 function togglestyle(id) {
     currentStatus = id;
-
     [allBtn, interviewBtn, rejectedBtn].forEach(btn => {
         btn.classList.remove('bg-blue-500', 'text-white');
         btn.classList.add('bg-gray-200', 'text-black');
@@ -46,8 +44,6 @@ function togglestyle(id) {
     const selected = document.getElementById(id);
     selected.classList.remove('bg-gray-200', 'text-black');
     selected.classList.add('bg-blue-500', 'text-white');
-
-
     if (id === 'all-btn') {
         cardSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
