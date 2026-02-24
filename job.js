@@ -120,4 +120,29 @@ function renderCards(list) {
     if (list.length === 0) {
         filterSection.innerHTML = getEmptyStateHTML();
         return;
-    }
+  }
+  
+    list.forEach(item => {
+        let div = document.createElement('div');
+        div.className = 'card flex justify-between bg-white border border-gray-200 rounded-xl p-4 mb-3 hover:shadow-md transition-shadow';
+        div.innerHTML = `
+            <div class="space-y-5 left-dev">
+              <p class="company-name font-bold text-xl">${item.companyName}</p>
+              <p class="post">${item.post}</p>
+              <p class="selary">${item.selary}</p>
+              <button class="not-applied-btn bg-gray-200 px-5 py-2 rounded-[5px] text-2xl">${item.notAppliedBtn}</button>
+              <p class="note">${item.note}</p>
+              <div class="flex gap-2">
+                <button class="interview-btn font-semibold px-4 py-1.5 rounded-md border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-colors">INTERVIEW</button>
+                <button class="rejected-btn font-semibold px-4 py-1.5 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors">Rejected</button>
+              </div>
+            </div>
+            <div class="delate-btn-div">
+              <button class="btn-delate pt-6 pr-8"><img src="Vector (1).png" alt="Delete"></button>
+            </div>
+        `;
+        filterSection.appendChild(div);
+    });
+}
+
+calculateCount();
