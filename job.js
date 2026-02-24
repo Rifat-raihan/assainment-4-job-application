@@ -35,3 +35,28 @@ function calculateCount() {
         cardSection.innerHTML = getEmptyStateHTML();
     }
 }
+
+function togglestyle(id) {
+    currentStatus = id;
+
+    [allBtn, interviewBtn, rejectedBtn].forEach(btn => {
+        btn.classList.remove('bg-blue-500', 'text-white');
+        btn.classList.add('bg-gray-200', 'text-black');
+    });
+    const selected = document.getElementById(id);
+    selected.classList.remove('bg-gray-200', 'text-black');
+    selected.classList.add('bg-blue-500', 'text-white');
+
+
+    if (id === 'all-btn') {
+        cardSection.classList.remove('hidden');
+        filterSection.classList.add('hidden');
+        if (cardSection.querySelectorAll('.card').length === 0) {
+            cardSection.innerHTML = getEmptyStateHTML();
+        }
+    } else {
+        cardSection.classList.add('hidden');
+        filterSection.classList.remove('hidden');
+        renderCards(id === 'interview-btn' ? interviewList : rejectList);
+    }
+}
